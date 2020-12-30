@@ -1,2 +1,4 @@
 # buildyourownlisp
-My work from the C tutorial at http://www.buildyourownlisp.com
+Repo for my work from the buildyourownlisp.com C tutorial. Not much to say for now, I might write this readme if I'm bored.
+* * *
+
