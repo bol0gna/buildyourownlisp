@@ -1,27 +1,29 @@
 /*
  * lisB (lisp by bol0gna)
- * version 0.0.1
+ * version 0.0.2
  */
 
+#include <stdlib.h>
 #include <stdio.h>
 
-/* user input buffer, max size 2048 */
-static char input[2048];
+#include <editline/readline.h>
+#include <editline/history.h>
 
 int main(int argc, char** argv) {
 
 	/* version and exit info */
-	puts("lisB version 0.0.1, Ctrl+c to exit\n");
+	puts("lisB version 0.0.2, Ctrl+c to exit\n");
 
 	while(1) {
 
-		/* prompt */
-		fputs("lisB> ", stdout);
+		/* prompt and get input, add input to history */
+		char* input = readline("lisB> ");
+		add_history(input);
 
-		/* read line of user input (length <= max size) into buffer */
-		fgets(input, 2048, stdin);
+		printf("no, you're a %s\n", input);
 
-		printf("no, you're a %s", input);
+		free(input);
+
 	}
 
 	return 0;
