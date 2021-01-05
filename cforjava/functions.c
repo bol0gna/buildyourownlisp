@@ -21,7 +21,7 @@ void scanValues() {
 	printf("floating point value: ");
 	scanf("%f", &f);
 	printf("string 255 chars or less: ");
-	scanf("%s", s);
+	scanf("%255s", s);
 
 	printf("integer was %d\nfloating point was %f\nstring was %s\n", i, f, s);
 }
