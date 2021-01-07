@@ -37,5 +37,15 @@ void free_TreeNode(TreeNode this) {
 }
 
 void TreeNode_print(TreeNode this) {
-	printf("Node[%d]", this->info);
+	if (this != NULL) {
+		printf("Node[%d]", this->info);
+	}
+}
+
+void TreeNode_printTree(TreeNode this) {
+	if (this != NULL) {
+		TreeNode_printTree(this->left);
+		TreeNode_print(this);
+		TreeNode_printTree(this->right);
+	}
 }
