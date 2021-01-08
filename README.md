@@ -1,6 +1,6 @@
 # learning-c
 
-Collection of various things I'm working on as a way to learn C. Links to the resources are also included.
+Collection of various things I'm working on as a way to learn C. Links to the resources are also included. Crossed out links are to resources whose work I've already finished.
 
 ### Resources
 
