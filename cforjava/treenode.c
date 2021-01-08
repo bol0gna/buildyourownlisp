@@ -66,13 +66,21 @@ struct node* node_add(struct node* this, int val) {
 
 struct tree {
 	struct node* root;
-}
+};
 
 struct tree* new_tree() {
 	struct tree* this = (struct tree*)malloc(sizeof(struct tree));
 	if (this == NULL) return this;
 	this->root = NULL;
 	return this;
+}
+
+void tree_print(struct tree* this) {
+	node_treeprint(this->root);
+}
+
+void tree_add(struct tree* this, int val) {
+	this->root = node_add(this->root, val);
 }
 
 int main(int argc, char* argv[]) {
@@ -97,5 +105,13 @@ int main(int argc, char* argv[]) {
 	node_add(d, 5);
 
 	node_treeprint(d);
+	printf("\n");
+
+	struct tree* h = new_tree();
+	tree_add(h, 1);
+	tree_add(h, 2);
+	tree_add(h, 4);
+	tree_add(h, 3);
+	tree_print(h);
 	printf("\n");
 }
