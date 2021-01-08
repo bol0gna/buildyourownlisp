@@ -12,6 +12,7 @@ struct node {
 	struct node* right;
 };
 
+/* allocate and initialize new node with an int value to store */
 struct node* new_node(int val) {
 	struct node* this = (struct node*)malloc(sizeof(struct node));
 	if (this == NULL) {
@@ -25,6 +26,7 @@ struct node* new_node(int val) {
 	return this;
 }
 
+/* recursively free this node and all children */
 void free_node(struct node* this) {
 	if (this == NULL) return;
 	if (this->left == NULL && this->right == NULL) {
@@ -35,18 +37,31 @@ void free_node(struct node* this) {
 	free_node(this->right);
 }
 
+/* print this node only */
 void node_print(struct node* this) {
 	if (this != NULL) {
 		printf("Node[%d]", this->info);
 	}
 }
 
+/* recursively print this node and all children, in-order traversal */
 void node_treeprint(struct node* this) {
 	if (this != NULL) {
 		node_treeprint(this->left);
 		node_print(this);
 		node_treeprint(this->right);
 	}
+}
+
+struct node* node_add(struct node* this, int val) {
+	if (this == NULL) {
+		this = new_node(val);
+	} else if (val < this->info) {
+		this->left = node_add(this->left, val);
+	} else if (val > this->info) {
+		this->right = node_add(this->right, val);
+	} // no action taken if val is already in tree
+	return this;
 }
 
 int main(int argc, char* argv[]) {
@@ -62,5 +77,14 @@ int main(int argc, char* argv[]) {
 	b->right = a;
 	c->right = b;
 	node_treeprint(c);
+	printf("\n");
+
+	struct node* d = node_add(NULL, 5);
+	node_add(d, 6);
+	node_add(d, 2);
+	node_add(d, 1);
+	node_add(d, 5);
+
+	node_treeprint(d);
 	printf("\n");
 }
