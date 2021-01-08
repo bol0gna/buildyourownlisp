@@ -64,6 +64,17 @@ struct node* node_add(struct node* this, int val) {
 	return this;
 }
 
+struct tree {
+	struct node* root;
+}
+
+struct tree* new_tree() {
+	struct tree* this = (struct tree*)malloc(sizeof(struct tree));
+	if (this == NULL) return this;
+	this->root = NULL;
+	return this;
+}
+
 int main(int argc, char* argv[]) {
 	struct node* a = new_node(123);
 	struct node* b = new_node(7);
