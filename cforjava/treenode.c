@@ -83,6 +83,22 @@ void tree_add(struct tree* this, int val) {
 	this->root = node_add(this->root, val);
 }
 
+int node_lookup(struct node* this, int val) {
+	if (this == NULL) {
+		return 0;
+	} else if (val < this->info) {
+		return node_lookup(this->left, val);
+	} else if (val > this->info) {
+		return node_lookup(this->right, val);
+	} else {
+		return 1;
+	}
+}
+
+int tree_lookup(struct tree* this, int val) {
+	return node_lookup(this->root, val);
+}
+
 int main(int argc, char* argv[]) {
 	struct node* a = new_node(123);
 	struct node* b = new_node(7);
@@ -114,4 +130,6 @@ int main(int argc, char* argv[]) {
 	tree_add(h, 3);
 	tree_print(h);
 	printf("\n");
+
+	printf("3 in tree: %d\n5 in tree: %d\n", tree_lookup(h, 3), tree_lookup(h, 5));
 }
