@@ -3,10 +3,11 @@
 #include <stdio.h>
 #include "employee.h"
 #include "linkedlist.h"
+#include "employeelist.h"
 
-void printList(LinkedList list) {
-	LinkedList_print(list);
-	printf(" length %d", LinkedList_length(list));
+void printList(EmployeeList list) {
+	EmployeeList_print(list);
+	printf("length %d", EmployeeList_length(list));
 }
 
 int main(int argc, char* argv[]) {
@@ -30,10 +31,10 @@ int main(int argc, char* argv[]) {
 	printf("%p ", jane);
 	printf("%p\n", jeff);
 
-	LinkedList list = new_LinkedList();
-	LinkedList_prepend(list, jane);
-	LinkedList_prepend(list, jeff);
-	LinkedList_append(list, john);
+	EmployeeList list = new_EmployeeList();
+	EmployeeList_prepend(list, jane);
+	EmployeeList_prepend(list, jeff);
+	EmployeeList_append(list, john);
 	printList(list);
 }
 

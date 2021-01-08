@@ -2,13 +2,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "employee.h"
 #include "linkedlist.h"
-
-struct node {
-	void* info;
-	Node next;
-};
 
 Node new_Node(void* val) {
 	Node this = (Node)malloc(sizeof(struct node));
@@ -24,12 +18,6 @@ void Node_printList(Node this) {
 		Node_printList(this->next);
 	}
 }
-
-struct linkedlist {
-	Node head;
-	Node tail;
-	int length;
-};
 
 LinkedList new_LinkedList() {
 	LinkedList this = (LinkedList)malloc(sizeof(struct linkedlist));
