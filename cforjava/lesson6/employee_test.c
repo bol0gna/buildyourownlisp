@@ -4,6 +4,11 @@
 #include "employee.h"
 #include "linkedlist.h"
 
+void printList(LinkedList list) {
+	LinkedList_print(list);
+	printf(" length %d", LinkedList_length(list));
+}
+
 int main(int argc, char* argv[]) {
 	Employee john = new_Employee("John Doe", 12345);
 	Employee jane = new_Employee("Jane Doe", 54321);
@@ -29,5 +34,6 @@ int main(int argc, char* argv[]) {
 	LinkedList_prepend(list, jane);
 	LinkedList_prepend(list, jeff);
 	LinkedList_append(list, john);
-	LinkedList_print(list);
+	printList(list);
 }
+

@@ -1,14 +1,15 @@
 /* linked list and list node classes */
 
 typedef struct node* Node;
-extern Node new_Node(Employee val);
+extern Node new_Node(void* val);
 extern void Node_printList(Node this);
 
 typedef struct linkedlist* LinkedList;
 extern LinkedList new_LinkedList();
-extern void LinkedList_prepend(LinkedList this, Employee val);
-extern void LinkedList_append(LinkedList this, Employee val);
+extern void LinkedList_prepend(LinkedList this, void* val);
+extern void LinkedList_append(LinkedList this, void* val);
+
 extern int LinkedList_length(LinkedList this);
-extern Employee LinkedList_first(LinkedList this);
-extern Employee LinkedList_last(LinkedList this);
+extern void* LinkedList_first(LinkedList this);
+extern void* LinkedList_last(LinkedList this);
 extern void LinkedList_print(LinkedList this);

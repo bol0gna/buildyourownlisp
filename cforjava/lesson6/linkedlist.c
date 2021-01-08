@@ -6,11 +6,11 @@
 #include "linkedlist.h"
 
 struct node {
-	Employee info;
+	void* info;
 	Node next;
 };
 
-Node new_Node(Employee val) {
+Node new_Node(void* val) {
 	Node this = (Node)malloc(sizeof(struct node));
 	if (this == NULL) return this; // out of memory
 	this->info = val;
@@ -21,7 +21,6 @@ Node new_Node(Employee val) {
 void Node_printList(Node this) {
 	if (this != NULL) {
 		printf("%p ", this->info);
-		Employee_print(this->info);
 		Node_printList(this->next);
 	}
 }
@@ -41,7 +40,7 @@ LinkedList new_LinkedList() {
 	return this;
 }
 
-void LinkedList_prepend(LinkedList this, Employee val) {
+void LinkedList_prepend(LinkedList this, void* val) {
 	Node item = new_Node(val);
 	if (item == NULL) return; // out of memory
 	this->length++;
@@ -53,7 +52,7 @@ void LinkedList_prepend(LinkedList this, Employee val) {
 	this->head = item;
 }
 
-void LinkedList_append(LinkedList this, Employee val) {
+void LinkedList_append(LinkedList this, void* val) {
 	Node item = new_Node(val);
 	if (item == NULL) return; // out of memory
 	this->length++;
@@ -69,7 +68,7 @@ int LinkedList_length(LinkedList this) {
 	return this->length;
 }
 
-Employee LinkedList_first(LinkedList this) {
+void* LinkedList_first(LinkedList this) {
 	if (this->head == NULL) {
 		return NULL;
 	} else {
@@ -77,7 +76,7 @@ Employee LinkedList_first(LinkedList this) {
 	}
 }
 
-Employee LinkedList_last(LinkedList this) {
+void* LinkedList_last(LinkedList this) {
 	if (this->tail == NULL) {
 		return NULL;
 	} else {
