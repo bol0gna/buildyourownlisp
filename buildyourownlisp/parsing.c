@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <editline/readline.h>
 
+#include "mpc.h"
+
 int main(int argc, char** argv) {
 
 	/* version and exit info */
