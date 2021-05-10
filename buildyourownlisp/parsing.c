@@ -4,9 +4,44 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <editline/readline.h>
 
 #include "mpc.h"
+
+/* carry out the specified option when evaluating expression */
+long eval_op(char* op, long a, long b) {
+	if (strlen(op) != 1) {
+		return 0;
+	}
+
+	switch(op[0]) {
+		case '+': return a + b;
+		case '-': return a - b;
+		case '*': return a * b;
+		case '/': return a / b;
+		case '%': return a % b;
+		default: return 0;
+	}
+}
+
+long eval(mpc_ast_t* t) {
+	/* number is always leaf node of AST so return the number */
+	if (strstr(t->tag, "number")) {
+		return atoi(t->contents);
+	}
+
+	/* op is second child of t node, first is ( last is ) */
+	char* op = t->children[1]->contents;
+	long a = eval(t->children[2]);
+
+	/* evaluate all other sub-expressions of current, do specified op */
+	for (int i = 3; strstr(t->children[i]->tag, "expr"); i++) {
+		a = eval_op(op, a, eval(t->children[i]));
+	}
+
+	return a;
+}
 
 int main(int argc, char** argv) {
 		/* create & define parsers for polish notation */
@@ -18,7 +53,7 @@ int main(int argc, char** argv) {
 		mpca_lang(MPCA_LANG_DEFAULT,
 			"													\
 			number		: /-?[0-9]+/ ;							\
-			operator	: '+' | '-' | '*' | '/' ;				\
+			operator	: '+' | '-' | '*' | '/' | '%' ;			\
 			expr	: <number> | '(' <operator> <expr>+ ')' ;	\
 			lisp		: /^/ <operator> <expr>+ /$/ ;			\
 			",
@@ -35,7 +70,7 @@ int main(int argc, char** argv) {
 		/* parse input for polish notation, print AST on success */
 		mpc_result_t r;
 		if (mpc_parse("<stdin>", input, Lisp, &r)) {
-			mpc_ast_print(r.output);
+			printf("%li\n", eval(r.output));
 			mpc_ast_delete(r.output);
 		} else {
 			mpc_err_print(r.error);
