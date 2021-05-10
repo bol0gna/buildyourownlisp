@@ -12,19 +12,19 @@
 
 /* carry out the specified option when evaluating expression */
 long eval_op(char* op, long a, long b) {
-	if (strlen(op) != 1) {
-		return 0;
+	if (strcmp(op, "+") == 0) { return a + b; }
+	if (strcmp(op, "-") == 0) { return a - b; }
+	if (strcmp(op, "*") == 0) { return a * b; }
+	if (strcmp(op, "/") == 0) { return a / b; }
+	if (strcmp(op, "%") == 0) { return a % b; }
+	if (strcmp(op, "^") == 0) { return (long)pow(a, b); }
+	if (strcmp(op, "min") == 0) {
+		return (a<b)*a + !(a<b)*b;
 	}
-
-	switch(op[0]) {
-		case '+': return a + b;
-		case '-': return a - b;
-		case '*': return a * b;
-		case '/': return a / b;
-		case '%': return a % b;
-		case '^': return (long)pow(a, b);
-		default: return 0;
+	if (strcmp(op, "max") == 0) {
+		return (a>b)*a + !(a>b)*b;
 	}
+	return 0;
 }
 
 long eval(mpc_ast_t* t) {
@@ -38,9 +38,14 @@ long eval(mpc_ast_t* t) {
 	long a = eval(t->children[2]);
 
 	/* evaluate all other sub-expressions of current, do specified op */
-	for (int i = 3; strstr(t->children[i]->tag, "expr"); i++) {
+	int i = 3;
+	while(strstr(t->children[i]->tag, "expr")) {
 		a = eval_op(op, a, eval(t->children[i]));
+		i++;
 	}
+
+	/* if only one operand and operator is -, negate operand */
+	if (i == 3 && strcmp(op, "-") == 0) { a = 0 - a; }
 
 	return a;
 }
@@ -53,11 +58,11 @@ int main(int argc, char** argv) {
 		mpc_parser_t* Lisp = mpc_new("lisp");
 
 		mpca_lang(MPCA_LANG_DEFAULT,
-			"													\
-			number		: /-?[0-9]+/ ;							\
-			operator	: '+' | '-' | '*' | '/' | '%' | '^' ;	\
-			expr	: <number> | '(' <operator> <expr>+ ')' ;	\
-			lisp		: /^/ <operator> <expr>+ /$/ ;			\
+			"																\
+			number	: /-?[0-9]+/ ;											\
+			operator: '+' | '-' | '*' | '/' | '%' | '^' | \"min\" | \"max\" ;\
+			expr	: <number> | '(' <operator> <expr>+ ')' ;				\
+			lisp	: /^/ <operator> <expr>+ /$/ ;							\
 			",
 			Number, Operator, Expr, Lisp);
 
