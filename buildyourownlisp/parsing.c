@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include <editline/readline.h>
 
 #include "mpc.h"
@@ -21,6 +22,7 @@ long eval_op(char* op, long a, long b) {
 		case '*': return a * b;
 		case '/': return a / b;
 		case '%': return a % b;
+		case '^': return (long)pow(a, b);
 		default: return 0;
 	}
 }
@@ -53,7 +55,7 @@ int main(int argc, char** argv) {
 		mpca_lang(MPCA_LANG_DEFAULT,
 			"													\
 			number		: /-?[0-9]+/ ;							\
-			operator	: '+' | '-' | '*' | '/' | '%' ;			\
+			operator	: '+' | '-' | '*' | '/' | '%' | '^' ;	\
 			expr	: <number> | '(' <operator> <expr>+ ')' ;	\
 			lisp		: /^/ <operator> <expr>+ /$/ ;			\
 			",
